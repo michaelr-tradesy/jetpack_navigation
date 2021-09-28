@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.screen_view_first.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class FirstView @JvmOverloads constructor(
     context: Context,
@@ -18,6 +15,7 @@ class FirstView @JvmOverloads constructor(
     defStyleAttr: Int = -1
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private val coroutineScope =  CoroutineScope(Dispatchers.IO)
     private var index = 0
 
     init {
@@ -29,12 +27,12 @@ class FirstView @JvmOverloads constructor(
             // which was injected into the nav controller,
             // and that nav controller has not yet been loaded...
             // I must delay this process.
-            GlobalScope.launch(Dispatchers.IO) {
+            coroutineScope.launch {
                 delay(50)
                 val navController = findNavController()
                 val arguments = navController.currentBackStackEntry?.arguments
                 index = arguments?.getInt("INDEX", 0) ?: 0
-                GlobalScope.launch(Dispatchers.Main) {
+                coroutineScope.launch(Dispatchers.Main) {
                     textView.text = "This is Screen # $index"
                 }
             }
