@@ -3,17 +3,12 @@ package com.example.navigationexercise
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavDestination
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.core.view.get
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import java.util.*
-import android.R
-
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import androidx.core.view.children
-import androidx.core.view.get
-import java.util.Collections.rotate
 
 
 /**
@@ -38,8 +33,8 @@ class ViewNavigator(private val container: ViewGroup) : Navigator<ViewDestinatio
 
     private fun replaceView(view: View?, isPopping: Boolean = true) {
         view?.let { newView ->
-            val newResourceId = if(isPopping) com.example.navigationexercise.R.anim.slide_in_right else com.example.navigationexercise.R.anim.slide_in_left
-            val prevResourceId = if(!isPopping) com.example.navigationexercise.R.anim.slide_out_right else com.example.navigationexercise.R.anim.slide_out_left
+            val newResourceId = if(isPopping) R.anim.slide_in_right else R.anim.slide_in_left
+            val prevResourceId = if(!isPopping) R.anim.slide_out_right else R.anim.slide_out_left
             val customViewFadeIn: Animation = AnimationUtils.loadAnimation(
                 newView.context,
                 newResourceId
